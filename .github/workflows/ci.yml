@@ -21,4 +21,7 @@ jobs:
               run: docker run -d -p 8000:8000 --name geoquiz-api geoquiz-api:ci
 
             - name: Smoke test health endpoint
-              run: curl --fail http://localhost:8000/
+              run: |
+                sleep 5
+                docker logs geoquiz-api
+                curl --fail http://localhost:8000/
