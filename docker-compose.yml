@@ -4,4 +4,4 @@ services:
     container_name: geoquiz-api
     ports:
       - "8000:8000"
-    restart: unless-stoped
+    restart: unless-stopped
