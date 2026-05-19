@@ -10,24 +10,16 @@ from app.services.quiz_service import (
 )
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/quiz",
+    tags=["Quiz"]
+)
 
-
-@router.get("/countries", response_model=list[Country])
-def countries():
-    return get_all_countries()
-
-
-@router.get("/countries/{country_id}", response_model=Country)
-def country_by_id(country_id: int):
-    return get_country_by_id(country_id)
-
-
-@router.get("/quiz/random", response_model=QuizQuestion)
+@router.get("/random", response_model=QuizQuestion)
 def random_quiz(difficulty: DifficultyLevel | None = None):
     return generate_random_quiz(difficulty)
 
 
-@router.post("/quiz/answer", response_model=AnswerResult)
+@router.post("/answer", response_model=AnswerResult)
 def answer_quiz(answer: AnswerRequest):
     return check_answer(answer)
