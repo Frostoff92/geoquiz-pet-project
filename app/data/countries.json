@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Indonesia",
+    "flag": "🇮🇩",
+    "difficulty": "hard",
+    "similar_to": ["Monaco", "Poland"]
+  },
+  {
+    "id": 2,
+    "name": "Monaco",
+    "flag": "🇲🇨",
+    "difficulty": "hard",
+    "similar_to": ["Indonesia", "Poland"]
+  },
+  {
+    "id": 3,
+    "name": "Poland",
+    "flag": "🇵🇱",
+    "difficulty": "medium",
+    "similar_to": ["Indonesia", "Monaco"]
+  }
+]
