@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from app.data import COUNTRIES
 from app.schemas import Country, QuizQuestion, AnswerRequest, AnswerResult
+from app.enums import DifficultyLevel
 import random
 
 app = FastAPI(
@@ -30,7 +31,9 @@ def get_country(country_id: int):
     raise HTTPException(status_code=404, detail="Country not found")
 
 @app.get("/quiz/random", response_model=QuizQuestion)
-def get_random_quiz(difficulty: str | None = None):
+def get_random_quiz(
+    difficulty: DifficultyLevel | None = None
+    ):
 
     filtered_countries = COUNTRIES
 
@@ -38,7 +41,7 @@ def get_random_quiz(difficulty: str | None = None):
         filtered_countries = [
             country
             for country in COUNTRIES
-            if country["difficulty"] == difficulty
+            if country["difficulty"] == difficulty.value
         ]
 
     if not filtered_countries:
