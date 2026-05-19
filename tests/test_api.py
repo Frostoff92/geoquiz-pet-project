@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from app.main import app
+from app.data import COUNTRIES
 
 client = TestClient(app)
 
@@ -63,6 +64,14 @@ def test_get_random_quiz_with_difficulty():
     assert "question_country_id" in data
     assert "options" in data
 
+    question_country = next(
+        country
+        for country in COUNTRIES
+        if country["id"] == data["question_country_id"]
+    )
+
+    assert question_country["difficulty"] == "hard"
+
 def test_get_random_quiz_invalid_difficulty():
     response = client.get("/quiz/random?difficulty=easy")
 
@@ -99,3 +108,16 @@ def test_submit_wrong_answer():
 
     assert data["correct"] is False
     assert data["message"] == "Wrong answer!"
+
+def test_submit_answer_with_unknown_question_country_id():
+    responce = client.post(
+        "/quiz/answer",
+        json={
+            "question_country_id": 999,
+            "selected_country_id": 1
+        }
+    )
+
+    assert responce.status_code == 404
+    assert responce.json()["detail"] == "Question country not found"
+
