@@ -30,10 +30,31 @@ def get_country(country_id: int):
     raise HTTPException(status_code=404, detail="Country not found")
 
 @app.get("/quiz/random", response_model=QuizQuestion)
-def get_random_quiz():
-    correct_country = random.choice(COUNTRIES)
+def get_random_quiz(difficulty: str | None = None):
 
-    options = random.sample(COUNTRIES, k=min(3, len(COUNTRIES)))
+    filtered_countries = COUNTRIES
+
+    if difficulty:
+        filtered_countries = [
+            country
+            for country in COUNTRIES
+            if country["difficulty"] == difficulty
+        ]
+
+    if not filtered_countries:
+        raise HTTPException(
+            status_code=404,
+            detail="No countries found for this difficulty"
+        )
+
+    correct_country = random.choice(filtered_countries)
+
+    options_pool = COUNTRIES.copy()
+
+    options = random.sample(
+        options_pool,
+        k=min(3, len(options_pool))
+    )
 
     if correct_country not in options:
         options[0] = correct_country
