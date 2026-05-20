@@ -2,8 +2,8 @@ from fastapi import FastAPI
 
 from app.routers.quiz import router as quiz_router
 from app.routers.countries import router as countries_router
-from app.database import Base, engine
-from app import models
+#from app.database import Base, engine
+#from app import models
 
 
 app = FastAPI(
@@ -12,7 +12,7 @@ app = FastAPI(
     version="0.9.0"
 )
 
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def root():
