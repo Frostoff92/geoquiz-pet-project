@@ -10,6 +10,21 @@ jobs:
     docker-build-and-smoke-test:
         runs-on: ubuntu-24.04
 
+        services:
+          postgres:
+            image: postgres:17
+            env:
+              POSTGRES_USER: geoquiz
+              POSTGRES_PASSWORD: geoquizpassword
+              POSTGRES_DB: geoquizdb
+            ports:
+              - 5432:5432
+            options: >-
+              --health-cmd "pg_isready -U geoquiz -d geoquizdb"
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -22,6 +37,11 @@ jobs:
             - name: Install dependencies
               run: pip install -r requirements.txt
 
+            - name: Init Database
+              run: python -m app.init_db
+
+            - name: Seed Database
+              run: python -m app.seed
             - name: Run tests
               run: python -m pytest
 
