@@ -4,4 +4,26 @@ services:
     container_name: geoquiz-api
     ports:
       - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://geoquiz:geoquizpassword@postgres:5432/geoquizdb
     restart: unless-stopped
+
+  postgres:
+    image: postgres:17
+    container_name: geoquiz-postgres
+
+    environment:
+      POSTGRES_USER: geoquiz
+      POSTGRES_PASSWORD: geoquizpassword
+      POSTGRES_DB: geoquizdb
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
