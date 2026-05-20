@@ -10,13 +10,17 @@ jobs:
     docker-build-and-smoke-test:
         runs-on: ubuntu-24.04
 
+        env:
+          DATABASE_URL: postgresql://geoquiz:geoquizpassword@localhost:5432/geoquiz_test
+          DATABASE_URL_TEST: postgresql://geoquiz:geoquizpassword@localhost:5432/geoquiz_test
+
         services:
           postgres:
             image: postgres:17
             env:
               POSTGRES_USER: geoquiz
               POSTGRES_PASSWORD: geoquizpassword
-              POSTGRES_DB: geoquizdb
+              POSTGRES_DB: geoquiz_test
             ports:
               - 5432:5432
             options: >-
@@ -44,7 +48,6 @@ jobs:
               run: python -m app.seed
             - name: Run tests
               run: python -m pytest
-
             - name: Build Docker image
               run: docker build -t geoquiz-api:ci .
 
