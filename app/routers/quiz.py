@@ -1,10 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
+from app.database import get_db
 from app.enums import DifficultyLevel
-from app.schemas import Country, QuizQuestion, AnswerRequest, AnswerResult
+from app.schemas import QuizQuestion, AnswerRequest, AnswerResult
 from app.services.quiz_service import (
-    get_all_countries,
-    get_country_by_id,
     generate_random_quiz,
     check_answer,
 )
@@ -15,11 +15,18 @@ router = APIRouter(
     tags=["Quiz"]
 )
 
+
 @router.get("/random", response_model=QuizQuestion)
-def random_quiz(difficulty: DifficultyLevel | None = None):
-    return generate_random_quiz(difficulty)
+def random_quiz(
+    difficulty: DifficultyLevel | None = None,
+    db: Session = Depends(get_db),
+):
+    return generate_random_quiz(db, difficulty)
 
 
 @router.post("/answer", response_model=AnswerResult)
-def answer_quiz(answer: AnswerRequest):
-    return check_answer(answer)
+def answer_quiz(
+    answer: AnswerRequest,
+    db: Session = Depends(get_db),
+):
+    return check_answer(db, answer)

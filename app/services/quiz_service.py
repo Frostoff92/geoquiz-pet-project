@@ -6,28 +6,32 @@ from app.data import COUNTRIES
 from app.enums import DifficultyLevel
 from app.schemas import AnswerRequest
 
-
-def get_all_countries():
-    return COUNTRIES
-
-
-def get_country_by_id(country_id: int):
-    for country in COUNTRIES:
-        if country["id"] == country_id:
-            return country
-
-    raise HTTPException(status_code=404, detail="Country not found")
+from sqlalchemy.orm import Session
+from app.models import CountryModel
 
 
-def generate_random_quiz(difficulty: DifficultyLevel | None = None):
-    filtered_countries = COUNTRIES
+def get_all_countries(db: Session):
+    return db.query(CountryModel).all()
+
+
+def get_country_by_id(db: Session, country_id: int):
+    country = (
+        db.query(CountryModel)
+        .filter(CountryModel.id == country_id)
+        .first()
+)
+    if not country:
+        raise HTTPException(status_code=404, detail="Country not found")
+    
+    return country
+
+def generate_random_quiz(db: Session, difficulty: DifficultyLevel | None = None):
+    query = db.query(CountryModel)
 
     if difficulty:
-        filtered_countries = [
-            country
-            for country in COUNTRIES
-            if country["difficulty"] == difficulty.value
-        ]
+        query = query.filter(CountryModel.difficulty == difficulty.value)
+
+    filtered_countries = query.all()
 
     if not filtered_countries:
         raise HTTPException(
@@ -37,7 +41,7 @@ def generate_random_quiz(difficulty: DifficultyLevel | None = None):
 
     correct_country = random.choice(filtered_countries)
 
-    options_pool = COUNTRIES.copy()
+    options_pool = db.query(CountryModel).all()
 
     options = random.sample(
         options_pool,
@@ -50,29 +54,30 @@ def generate_random_quiz(difficulty: DifficultyLevel | None = None):
     random.shuffle(options)
 
     return {
-        "question_country_id": correct_country["id"],
+        "question_country_id": correct_country.id,
         "question": "Which country has this flag?",
-        "flag": correct_country["flag"],
+        "flag": correct_country.flag,
         "options": [
             {
-                "id": country["id"],
-                "name": country["name"]
+                "id": country.id,
+                "name": country.name
             }
             for country in options
         ]
     }
 
 
-def check_answer(answer: AnswerRequest):
+def check_answer(db: Session, answer: AnswerRequest):
     correct_country_id = answer.question_country_id
     selected_country_id = answer.selected_country_id
 
-    country_exists = any(
-        country["id"] == correct_country_id
-        for country in COUNTRIES
+    country = (
+        db.query(CountryModel)
+        .filter(CountryModel.id == correct_country_id)
+        .first()
     )
 
-    if not country_exists:
+    if not country:
         raise HTTPException(status_code=404, detail="Question country not found")
 
     is_correct = correct_country_id == selected_country_id
