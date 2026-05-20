@@ -2,7 +2,6 @@ import random
 
 from fastapi import HTTPException
 
-from app.data import COUNTRIES
 from app.enums import DifficultyLevel
 from app.schemas import AnswerRequest
 

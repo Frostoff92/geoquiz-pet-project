@@ -1,16 +1,10 @@
-from fastapi.testclient import TestClient
-from app.main import app
-from app.data import COUNTRIES
-
-client = TestClient(app)
-
-def test_health_check():
+def test_health_check(client):
     responce = client.get("/health")
 
     assert responce.status_code == 200
     assert responce.json() == {"status": "ok"}
 
-def test_get_countries():
+def test_get_countries(client):
     responce = client.get("/countries")
 
     assert responce.status_code == 200
@@ -24,7 +18,7 @@ def test_get_countries():
     assert "flag" in data[0]
     assert "difficulty" in data[0]
 
-def test_get_country_by_id():
+def test_get_country_by_id(client):
     responce = client.get("/countries/1")
 
     assert responce.status_code == 200
@@ -34,13 +28,13 @@ def test_get_country_by_id():
     assert data["id"] == 1
     assert data["name"] == "Indonesia"
 
-def test_get_country_not_found():
+def test_get_country_not_found(client):
     responce = client.get("/countries/999")
 
     assert responce.status_code == 404
     assert responce.json()["detail"] == "Country not found"
 
-def test_get_random_quiz():
+def test_get_random_quiz(client):
     responce = client.get("/quiz/random")
 
     assert responce.status_code == 200
@@ -54,7 +48,7 @@ def test_get_random_quiz():
     assert isinstance(data["options"], list)
     assert len(data["options"]) > 0
 
-def test_get_random_quiz_with_difficulty():
+def test_get_random_quiz_with_difficulty(client):
     response = client.get("/quiz/random?difficulty=hard")
 
     assert response.status_code == 200
@@ -64,20 +58,23 @@ def test_get_random_quiz_with_difficulty():
     assert "question_country_id" in data
     assert "options" in data
 
+    countries_responce = client.get("/countries")
+    countries = countries_responce.json()
+
     question_country = next(
         country
-        for country in COUNTRIES
+        for country in countries
         if country["id"] == data["question_country_id"]
     )
 
     assert question_country["difficulty"] == "hard"
 
-def test_get_random_quiz_invalid_difficulty():
+def test_get_random_quiz_invalid_difficulty(client):
     response = client.get("/quiz/random?difficulty=easy")
 
     assert response.status_code == 422
 
-def test_submit_correct_answer():
+def test_submit_correct_answer(client):
     response = client.post(
         "/quiz/answer",
         json={
@@ -93,7 +90,7 @@ def test_submit_correct_answer():
     assert data["correct"] is True
     assert data["message"] == "Correct answer!"
 
-def test_submit_wrong_answer():
+def test_submit_wrong_answer(client):
     response = client.post(
         "/quiz/answer",
         json={
@@ -109,7 +106,7 @@ def test_submit_wrong_answer():
     assert data["correct"] is False
     assert data["message"] == "Wrong answer!"
 
-def test_submit_answer_with_unknown_question_country_id():
+def test_submit_answer_with_unknown_question_country_id(client):
     responce = client.post(
         "/quiz/answer",
         json={
