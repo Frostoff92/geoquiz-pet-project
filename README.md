@@ -106,9 +106,9 @@ geoquiz/
 Create a `.env` file in the project root:
 
 ```env
-DATABASE_URL=postgresql://username:password@localhost:5432/geoquizdb
+DATABASE_URL=postgresql://username:password@localhost:5432/namedb
 
-DATABASE_URL_TEST=postgresql://username:password@localhost:5432/geoquiz_test
+DATABASE_URL_TEST=postgresql://username:password@localhost:5432/test_db
 ```
 
 ---
