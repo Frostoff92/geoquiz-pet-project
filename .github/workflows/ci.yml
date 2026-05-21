@@ -53,11 +53,11 @@ jobs:
 
             - name: Run container
               run: |
-                docker run -d
-                -p 8000:8000
-                --add-host=host.dokcer.internal:host-gateway
-                -e DATABASE_URL=postgresql://geoquiz:geoquizpassword@host.docker.internal:5432/geoquiz_test
-                --name geoquiz-api
+                docker run -d \
+                -p 8000:8000 \
+                --add-host=host.dokcer.internal:host-gateway \
+                -e DATABASE_URL=postgresql://geoquiz:geoquizpassword@host.docker.internal:5432/geoquiz_test \
+                --name geoquiz-api \
                 geoquiz-api:ci
 
             - name: Smoke test health endpoint
