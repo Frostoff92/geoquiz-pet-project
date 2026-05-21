@@ -11,3 +11,4 @@ class CountryModel(Base):
     flag: Mapped[str] = mapped_column(String, nullable=False)
     difficulty: Mapped[str] = mapped_column(String, nullable=False)
     similar_to: Mapped[list[str]] = mapped_column(JSON, nullable=False)
+    continent: Mapped[str] = mapped_column(String, nullable=False)

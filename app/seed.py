@@ -24,7 +24,8 @@ def seed_countries():
             name=country["name"],
             flag=country["flag"],
             difficulty=country["difficulty"],
-            similar_to=country["similar_to"]
+            continent=country["continent"],
+            similar_to=country["similar_to"],
         )
 
         db.add(db_country)

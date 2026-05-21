@@ -4,6 +4,7 @@
     "name": "Indonesia",
     "flag": "🇮🇩",
     "difficulty": "hard",
+    "continent": "Asia",
     "similar_to": ["Monaco", "Poland"]
   },
   {
@@ -11,6 +12,7 @@
     "name": "Monaco",
     "flag": "🇲🇨",
     "difficulty": "hard",
+    "continent": "Europe",
     "similar_to": ["Indonesia", "Poland"]
   },
   {
@@ -18,6 +20,7 @@
     "name": "Poland",
     "flag": "🇵🇱",
     "difficulty": "medium",
+    "continent": "Europe",
     "similar_to": ["Indonesia", "Monaco"]
   }
 ]
