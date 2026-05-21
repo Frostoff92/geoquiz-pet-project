@@ -37,18 +37,21 @@ def db_session():
         name="Indonesia",
         flag="🇮🇩",
         difficulty="hard",
+        continent="Asia",
         similar_to=["Monaco", "Poland"],
     ),
     CountryModel(
         name="Monaco",
         flag="🇲🇨",
         difficulty="hard",
+        continent="Europe",
         similar_to=["Indonesia", "Poland"],
     ),
     CountryModel(
         name="Poland",
         flag="🇵🇱",
         difficulty="medium",
+        continent="Europe",
         similar_to=["Indonesia", "Monaco"],
     ),
 ])
