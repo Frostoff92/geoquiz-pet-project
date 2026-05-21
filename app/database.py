@@ -1,13 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-import os
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://geoquiz:geoquizpassword@localhost:5432/geoquizdb"
-)
+from app.config import settings
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(settings.database_url)
 
 SessionLocal = sessionmaker(
     autocommit=False,

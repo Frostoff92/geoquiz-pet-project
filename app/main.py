@@ -2,8 +2,7 @@ from fastapi import FastAPI
 
 from app.routers.quiz import router as quiz_router
 from app.routers.countries import router as countries_router
-#from app.database import Base, engine
-#from app import models
+from app.routers.health import router as health_router
 
 
 app = FastAPI(
@@ -11,8 +10,6 @@ app = FastAPI(
     description="Flag quiz API for geography and vexillology training",
     version="0.9.0"
 )
-
-#Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def root():
@@ -25,3 +22,4 @@ def health():
 
 app.include_router(quiz_router)
 app.include_router(countries_router)
+app.include_router(health_router)
