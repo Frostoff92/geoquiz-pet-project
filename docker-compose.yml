@@ -6,6 +6,9 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql://geoquiz:geoquizpassword@postgres:5432/geoquizdb
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/ready')"]
