@@ -31,6 +31,7 @@ The project provides a REST API for geography and vexillology quizzes using Fast
 - FastAPI
 - PostgreSQL
 - SQLAlchemy
+- Alembic
 - Pydantic
 - Pytest
 - HTTPX
@@ -38,6 +39,8 @@ The project provides a REST API for geography and vexillology quizzes using Fast
 - python-dotenv
 - Docker
 - Docker Compose
+- Prometheus
+- Grafana
 - GitHub Actions
 
 ---
@@ -97,6 +100,11 @@ geoquiz/
 ├── .env
 ├── .gitignore
 └── README.md
+├── alembic/
+├── grafana/
+│   ├── geoquiz-dashboard.json
+│   └── provisioning/
+├── prometheus.yml
 ```
 
 ---
@@ -213,7 +221,8 @@ The project includes a basic observability stack:
 ## Health Check
 
 ```http
-GET /health
+GET /health/live
+GET /health/ready
 ```
 
 ---
@@ -267,13 +276,11 @@ Example request body:
 
 # Future Improvements
 
-- Alembic migrations
 - Async SQLAlchemy support
 - Redis caching
 - JWT authentication
 - Kubernetes deployment
 - Helm charts
-- Prometheus/Grafana monitoring
 - Production-ready CI/CD pipeline
 - Frontend integration
 - Difficulty balancing logic
