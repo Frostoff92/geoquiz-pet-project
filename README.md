@@ -196,6 +196,18 @@ The project includes GitHub Actions CI pipeline with:
 
 ---
 
+## Observability
+
+The project includes a basic observability stack:
+
+- FastAPI metrics endpoint: `http://localhost:8000/metrics`
+- Prometheus UI: `http://localhost:9090`
+- Grafana UI: `http://localhost:3000`
+- Grafana dashboard JSON is stored in `grafana/geoquiz-dashboard.json`
+- Prometheus datasource is provisioned automatically from `grafana/provisioning/datasources/datasource.yml`
+  
+---
+
 # API Endpoints
 
 ## Health Check
