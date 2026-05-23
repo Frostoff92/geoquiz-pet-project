@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.routers.quiz import router as quiz_router
 from app.routers.countries import router as countries_router
 from app.routers.health import router as health_router
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 app = FastAPI(
@@ -10,6 +11,8 @@ app = FastAPI(
     description="Flag quiz API for geography and vexillology training",
     version="0.9.0"
 )
+
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 def root():
