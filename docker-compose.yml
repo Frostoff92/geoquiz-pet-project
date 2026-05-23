@@ -53,6 +53,16 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: geoquiz-grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      prometheus:
+        condition: service_started
+    restart: unless-stopped
+
 volumes:
   postgres_data:
 
