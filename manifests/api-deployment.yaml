@@ -28,4 +28,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: geoquiz-config
+            - secretRef:
+                name: geoquiz-secret
 
