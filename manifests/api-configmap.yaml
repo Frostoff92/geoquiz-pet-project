@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: geoquiz-config
+
+data:
+  DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/geoquiz"
