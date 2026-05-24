@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: geoquiz-postgres
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: geoquiz-postgres
+
+  template:
+    metadata:
+      labels:
+        app: geoquiz-postgres
+
+    spec:
+      containers:
+        - name: geoquiz-postgres
+          image: postgres:17
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 5432
+
+          env:
+            - name: POSTGRES_DB
+              value: geoquiz
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
