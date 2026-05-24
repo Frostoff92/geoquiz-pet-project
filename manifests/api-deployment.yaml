@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: geoquiz-api
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: geoquiz-api
+
+  template:
+    metadata:
+      labels:
+        app: geoquiz-api
+
+    spec:
+      containers:
+        - name: geoquiz-api
+          image: geoquiz-api:v1
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://postgres:postgres@localhost:5432/geoquiz"
+
