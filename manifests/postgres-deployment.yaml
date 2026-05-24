@@ -32,3 +32,12 @@ spec:
               value: postgres
             - name: POSTGRES_PASSWORD
               value: postgres
+
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: geoquiz-postgres-pvc
