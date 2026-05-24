@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: geoquiz-api
-          image: geoquiz-api:v1
+          image: geoquiz-api:v5
           imagePullPolicy: Never
 
           ports:
