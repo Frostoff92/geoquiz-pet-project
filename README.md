@@ -105,6 +105,17 @@ geoquiz/
 │   ├── geoquiz-dashboard.json
 │   └── provisioning/
 ├── prometheus.yml
+|
+├── k8s/
+│   ├── api-configmap.yaml
+│   ├── api-deployment.yaml
+│   ├── api-secret.yaml
+│   ├── api-service.yaml
+│   ├── postgres-deployment.yaml
+│   ├── postgres-pvc.yaml
+│   ├── postgres-service.yaml
+│   ├── migration-job.yaml
+│   └── seed-job.yaml
 ```
 
 ---
@@ -149,6 +160,48 @@ http://localhost:8000/redoc
 
 ---
 
+# Run in Kubernetes (Minikube)
+
+Build Docker image inside Minikube:
+
+```bash
+minikube image build -t geoquiz-api:v5 .
+```
+
+Deploy infrastructure:
+
+```bash
+kubectl apply -f k8s/
+```
+
+Check resources:
+
+```bash
+kubectl get pods
+kubectl get svc
+kubectl get jobs
+```
+
+Test API from Kubernetes network:
+
+```bash
+kubectl exec -it test-client -- \
+curl http://geoquiz-api-service:8000/countries
+```
+
+The backend includes:
+
+- FastAPI Deployment
+- PostgreSQL Deployment
+- PersistentVolumeClaim (PVC)
+- ConfigMap + Secret
+- readiness/liveness probes
+- Alembic migration Job
+- seed Job
+- automatic Job cleanup via TTL
+
+---
+
 # Seed Database
 
 Populate PostgreSQL with countries data.
@@ -158,6 +211,7 @@ Local environment:
 ```bash
 py -m app.seed
 ```
+Seed is idempotent and safe to rerun.
 
 Inside Docker container:
 
