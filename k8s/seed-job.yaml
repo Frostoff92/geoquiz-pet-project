@@ -5,6 +5,8 @@ metadata:
   name: geoquiz-seed
 
 spec:
+  ttlSecondsAfterFinished: 300
+
   template:
     spec:
       containers:

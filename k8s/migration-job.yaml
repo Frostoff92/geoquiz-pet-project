@@ -5,6 +5,8 @@ metadata:
   name: geoquiz-migration
 
 spec:
+  ttlSecondsAfterFinished: 300
+
   template:
     spec:
       containers:
