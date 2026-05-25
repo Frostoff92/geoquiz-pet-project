@@ -87,8 +87,6 @@ geoquiz/
 │   ├── __init__.py
 │   ├── main.py
 │   ├── models.py
-│   ├── __pycache__
-│   │   └── main.cpython-313.pyc
 │   ├── routers
 │   │   ├── countries.py
 │   │   ├── health.py
@@ -116,14 +114,6 @@ geoquiz/
 │   ├── postgres-pvc.yaml
 │   ├── postgres-service.yaml
 │   └── seed-job.yaml
-├── manifests
-│   ├── api-configmap.yaml
-│   ├── api-deployment.yaml
-│   ├── api-secret.yaml
-│   ├── api-service.yaml
-│   ├── postgres-deployment.yaml
-│   ├── postgres-pvc.yaml
-│   └── postgres-service.yaml
 ├── prometheus.yml
 ├── README.md
 ├── requirements.txt
@@ -226,6 +216,7 @@ Local environment:
 ```bash
 py -m app.seed
 ```
+
 Seed is idempotent and safe to rerun.
 
 Inside Docker container:
