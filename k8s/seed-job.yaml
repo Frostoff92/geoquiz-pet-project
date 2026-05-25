@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: geoquiz-seed
+
+spec:
+  template:
+    spec:
+      containers:
+        - name: seed
+          image: geoquiz-api:v5
+          imagePullPolicy: Never
+
+          envFrom:
+            - configMapRef:
+                name: geoquiz-config
+            - secretRef:
+                name: geoquiz-secret
+
+          command:
+            - python
+            - -m
+            - app.seed
+
+      restartPolicy: Never
+
+  backoffLimit: 1

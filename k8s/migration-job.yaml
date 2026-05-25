@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: geoquiz-migration
+
+spec:
+  template:
+    spec:
+      containers:
+        - name: migration
+          image: geoquiz-api:v5
+          imagePullPolicy: Never
+
+          envFrom:
+            - configMapRef:
+                name: geoquiz-config
+            - secretRef:
+                name: geoquiz-secret
+
+          command:
+            - alembic
+            - upgrade
+            - head
+
+      restartPolicy: Never
+
+  backoffLimit: 1
