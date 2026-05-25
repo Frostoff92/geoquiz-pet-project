@@ -69,53 +69,68 @@ REST API
 
 ```text
 geoquiz/
-├── app/
-│   ├── data/
-│   │   └── countries.json
-│   │
-│   ├── routers/
-│   │   ├── countries.py
-│   │   └── quiz.py
-│   │
-│   ├── services/
-│   │   └── quiz_service.py
-│   │
-│   ├── database.py
-│   ├── enums.py
-│   ├── main.py
-│   ├── models.py
-│   ├── schemas.py
-│   └── seed.py
-│
-├── tests/
-│   ├── conftest.py
-│   └── test_api.py
-│
-├── .github/workflows/
-│   └── ci.yml
-│
+├── alembic
+│   ├── env.py
+│   ├── README
+│   ├── script.py.mako
+│   └── versions
+│       ├── 44c2a2cfe613_create_countries_table.py
+│       └── c25af52a672b_add_continent_field.py
+├── alembic.ini
+├── app
+│   ├── config.py
+│   ├── data
+│   │   └── countries.json
+│   ├── database.py
+│   ├── enums.py
+│   ├── init_db.py
+│   ├── __init__.py
+│   ├── main.py
+│   ├── models.py
+│   ├── __pycache__
+│   │   └── main.cpython-313.pyc
+│   ├── routers
+│   │   ├── countries.py
+│   │   ├── health.py
+│   │   ├── __init__.py
+│   │   └── quiz.py
+│   ├── schemas.py
+│   ├── seed.py
+│   └── services
+│       ├── __init__.py
+│       └── quiz_service.py
 ├── docker-compose.yml
 ├── Dockerfile
-├── requirements.txt
-├── .env
-├── .gitignore
-└── README.md
-├── alembic/
-├── grafana/
-│   ├── geoquiz-dashboard.json
-│   └── provisioning/
+├── grafana
+│   ├── geoquiz-dashboard.json
+│   └── provisioning
+│       └── datasources
+│           └── datasource.yml
+├── k8s
+│   ├── api-configmap.yaml
+│   ├── api-deployment.yaml
+│   ├── api-secret.yaml
+│   ├── api-service.yaml
+│   ├── migration-job.yaml
+│   ├── postgres-deployment.yaml
+│   ├── postgres-pvc.yaml
+│   ├── postgres-service.yaml
+│   └── seed-job.yaml
+├── manifests
+│   ├── api-configmap.yaml
+│   ├── api-deployment.yaml
+│   ├── api-secret.yaml
+│   ├── api-service.yaml
+│   ├── postgres-deployment.yaml
+│   ├── postgres-pvc.yaml
+│   └── postgres-service.yaml
 ├── prometheus.yml
-|
-├── k8s/
-│   ├── api-configmap.yaml
-│   ├── api-deployment.yaml
-│   ├── api-secret.yaml
-│   ├── api-service.yaml
-│   ├── postgres-deployment.yaml
-│   ├── postgres-pvc.yaml
-│   ├── postgres-service.yaml
-│   ├── migration-job.yaml
-│   └── seed-job.yaml
+├── README.md
+├── requirements.txt
+└── tests
+    ├── conftest.py
+    └── test_api.py
+
 ```
 
 ---
@@ -333,7 +348,6 @@ Example request body:
 - Async SQLAlchemy support
 - Redis caching
 - JWT authentication
-- Kubernetes deployment
 - Helm charts
 - Production-ready CI/CD pipeline
 - Frontend integration
