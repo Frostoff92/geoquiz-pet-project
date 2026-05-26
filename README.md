@@ -194,6 +194,34 @@ kubectl exec -it test-client -- \
 curl http://geoquiz-api-service:8000/countries
 ```
 
+## Kubernetes Rollout / Rollback
+
+Build a new image version:
+
+```bash
+minikube image build -t geoquiz-api:v6 .
+```
+
+Update image tag in `k8s/api-deployment.yaml`, then apply:
+
+```bash
+kubectl apply -f k8s/api-deployment.yaml
+kubectl rollout status deployment/geoquiz-api
+```
+
+Check current image:
+
+```bash
+kubectl describe deployment geoquiz-api | grep Image
+```
+
+Rollback to the previous revision:
+
+```bash
+kubectl rollout undo deployment/geoquiz-api
+kubectl rollout status deployment/geoquiz-api
+```
+
 The backend includes:
 
 - FastAPI Deployment
