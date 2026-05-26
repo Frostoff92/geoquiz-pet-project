@@ -73,6 +73,16 @@ def test_get_random_quiz_with_difficulty(client):
 
     assert question_country["difficulty"] == "hard"
 
+def test_get_random_quiz_capital(client):
+    response = client.get("/quiz/random?mode=capital")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert "capital" in data["question"].lower()
+    assert len(data["options"]) == 3
+
 def test_get_random_quiz_invalid_difficulty(client):
     response = client.get("/quiz/random?difficulty=easy")
 
