@@ -55,7 +55,7 @@ jobs:
               run: |
                 docker run -d \
                 -p 8000:8000 \
-                --add-host=host.dokcer.internal:host-gateway \
+                --add-host=host.docker.internal:host-gateway \
                 -e DATABASE_URL=postgresql://geoquiz:geoquizpassword@host.docker.internal:5432/geoquiz_test \
                 --name geoquiz-api \
                 geoquiz-api:ci
@@ -64,4 +64,4 @@ jobs:
               run: |
                 sleep 5
                 docker logs geoquiz-api
-                curl --fail http://localhost:8000/health/live
+                curl --fail http://localhost:8000/health
