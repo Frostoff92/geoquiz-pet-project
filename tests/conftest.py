@@ -38,6 +38,7 @@ def db_session():
         flag="🇮🇩",
         difficulty="hard",
         continent="Asia",
+        capital="Jakarta",
         similar_to=["Monaco", "Poland"],
     ),
     CountryModel(
@@ -45,6 +46,7 @@ def db_session():
         flag="🇲🇨",
         difficulty="hard",
         continent="Europe",
+        capital="Monaco",
         similar_to=["Indonesia", "Poland"],
     ),
     CountryModel(
@@ -52,6 +54,7 @@ def db_session():
         flag="🇵🇱",
         difficulty="medium",
         continent="Europe",
+        capital="Warsaw",
         similar_to=["Indonesia", "Monaco"],
     ),
 ])

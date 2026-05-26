@@ -17,6 +17,8 @@ def test_get_countries(client):
     assert "name" in data[0]
     assert "flag" in data[0]
     assert "difficulty" in data[0]
+    assert "continent" in data[0]
+    assert "capital" in data[0]
 
 def test_get_country_by_id(client):
     responce = client.get("/countries/1")
@@ -27,6 +29,8 @@ def test_get_country_by_id(client):
 
     assert data["id"] == 1
     assert data["name"] == "Indonesia"
+    assert data["continent"] == "Asia"
+    assert data["capital"] == "Jakarta"
 
 def test_get_country_not_found(client):
     responce = client.get("/countries/999")

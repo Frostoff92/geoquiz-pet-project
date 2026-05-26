@@ -12,3 +12,5 @@ class CountryModel(Base):
     difficulty: Mapped[str] = mapped_column(String, nullable=False)
     similar_to: Mapped[list[str]] = mapped_column(JSON, nullable=False)
     continent: Mapped[str] = mapped_column(String, nullable=False)
+    capital: Mapped[str] = mapped_column(String, nullable=False)
+    
