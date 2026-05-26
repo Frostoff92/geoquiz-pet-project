@@ -5,6 +5,8 @@ class Country(BaseModel):
     name: str
     flag: str
     difficulty: str
+    continent: str
+    capital: str
     similar_to: list[str]
 
 class QuizOption(BaseModel):

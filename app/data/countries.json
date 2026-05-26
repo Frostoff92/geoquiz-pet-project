@@ -5,6 +5,7 @@
     "flag": "🇮🇩",
     "difficulty": "hard",
     "continent": "Asia",
+    "capital": "Jakarta",
     "similar_to": ["Monaco", "Poland"]
   },
   {
@@ -13,6 +14,7 @@
     "flag": "🇲🇨",
     "difficulty": "hard",
     "continent": "Europe",
+    "capital": "Monaco",
     "similar_to": ["Indonesia", "Poland"]
   },
   {
@@ -21,6 +23,7 @@
     "flag": "🇵🇱",
     "difficulty": "medium",
     "continent": "Europe",
+    "capital": "Warsaw",
     "similar_to": ["Indonesia", "Monaco"]
   }
 ]

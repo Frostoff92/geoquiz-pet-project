@@ -2,7 +2,7 @@ import random
 
 from fastapi import HTTPException
 
-from app.enums import DifficultyLevel
+from app.enums import DifficultyLevel, QuizMode
 from app.schemas import AnswerRequest
 
 from sqlalchemy.orm import Session
@@ -24,7 +24,11 @@ def get_country_by_id(db: Session, country_id: int):
     
     return country
 
-def generate_random_quiz(db: Session, difficulty: DifficultyLevel | None = None):
+def generate_random_quiz(
+    db: Session, 
+    difficulty: DifficultyLevel | None = None,
+    mode: QuizMode = QuizMode.flag
+):
     query = db.query(CountryModel)
 
     if difficulty:
@@ -52,10 +56,19 @@ def generate_random_quiz(db: Session, difficulty: DifficultyLevel | None = None)
 
     random.shuffle(options)
 
+    if mode == QuizMode.flag:
+        question = "Which country has this flag?"
+        payload = correct_country.flag
+    elif mode == QuizMode.capital:
+        question = (
+        f"Which country has the capital "f"{correct_country.capital}?"
+        )
+        payload = ""
+
     return {
         "question_country_id": correct_country.id,
-        "question": "Which country has this flag?",
-        "flag": correct_country.flag,
+        "question": question,
+        "flag": payload,
         "options": [
             {
                 "id": country.id,
@@ -64,6 +77,7 @@ def generate_random_quiz(db: Session, difficulty: DifficultyLevel | None = None)
             for country in options
         ]
     }
+
 
 
 def check_answer(db: Session, answer: AnswerRequest):

@@ -17,6 +17,8 @@ def test_get_countries(client):
     assert "name" in data[0]
     assert "flag" in data[0]
     assert "difficulty" in data[0]
+    assert "continent" in data[0]
+    assert "capital" in data[0]
 
 def test_get_country_by_id(client):
     responce = client.get("/countries/1")
@@ -27,6 +29,8 @@ def test_get_country_by_id(client):
 
     assert data["id"] == 1
     assert data["name"] == "Indonesia"
+    assert data["continent"] == "Asia"
+    assert data["capital"] == "Jakarta"
 
 def test_get_country_not_found(client):
     responce = client.get("/countries/999")
@@ -68,6 +72,16 @@ def test_get_random_quiz_with_difficulty(client):
     )
 
     assert question_country["difficulty"] == "hard"
+
+def test_get_random_quiz_capital(client):
+    response = client.get("/quiz/random?mode=capital")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert "capital" in data["question"].lower()
+    assert len(data["options"]) == 3
 
 def test_get_random_quiz_invalid_difficulty(client):
     response = client.get("/quiz/random?difficulty=easy")

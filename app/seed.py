@@ -25,6 +25,7 @@ def seed_countries():
             flag=country["flag"],
             difficulty=country["difficulty"],
             continent=country["continent"],
+            capital=country["capital"],
             similar_to=country["similar_to"],
         )
 
