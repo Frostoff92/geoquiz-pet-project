@@ -38,20 +38,31 @@ def test_get_country_not_found(client):
     assert responce.status_code == 404
     assert responce.json()["detail"] == "Country not found"
 
-def test_get_random_quiz(client):
+def test_get_random_quiz_defaults_to_flag(client):
     responce = client.get("/quiz/random")
 
     assert responce.status_code == 200
 
     data = responce.json()
 
+    expected_flags = {
+        1: "🇮🇩", 
+        2: "🇲🇨", 
+        3: "🇵🇱",
+    }
+
+    country_id = data["question_country_id"]
+
     assert "question_country_id" in data
     assert data ["question_type"] == "flag"
     assert data ["question"] == "Which country has this flag?"
-    assert data ["question_value"] in ["🇮🇩", "🇲🇨", "🇵🇱"]
+    assert data ["question_value"] == expected_flags[country_id]
+    
+
     assert "options" in data
-    assert isinstance(data["question_value"], str)
-    assert data["question_value"]
+    assert isinstance(data["options"], list)
+    assert len(data["question_value"]) > 0
+    assert country_id in [option["id"] for option in data ["options"]]
 
 def test_get_random_quiz_with_difficulty(client):
     response = client.get("/quiz/random?difficulty=hard")
