@@ -16,7 +16,8 @@ class QuizOption(BaseModel):
 class QuizQuestion(BaseModel):
     question_country_id: int
     question: str
-    flag: str
+    question_type: str
+    question_value: str
     options: list[QuizOption]
 
 class AnswerRequest(BaseModel):

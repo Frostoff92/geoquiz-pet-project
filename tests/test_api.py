@@ -38,19 +38,31 @@ def test_get_country_not_found(client):
     assert responce.status_code == 404
     assert responce.json()["detail"] == "Country not found"
 
-def test_get_random_quiz(client):
+def test_get_random_quiz_defaults_to_flag(client):
     responce = client.get("/quiz/random")
 
     assert responce.status_code == 200
 
     data = responce.json()
 
+    expected_flags = {
+        1: "🇮🇩", 
+        2: "🇲🇨", 
+        3: "🇵🇱",
+    }
+
+    country_id = data["question_country_id"]
+
     assert "question_country_id" in data
-    assert "question" in data
-    assert "flag" in data
+    assert data ["question_type"] == "flag"
+    assert data ["question"] == "Which country has this flag?"
+    assert data ["question_value"] == expected_flags[country_id]
+    
+
     assert "options" in data
     assert isinstance(data["options"], list)
     assert len(data["options"]) > 0
+    assert country_id in [option["id"] for option in data ["options"]]
 
 def test_get_random_quiz_with_difficulty(client):
     response = client.get("/quiz/random?difficulty=hard")
@@ -73,15 +85,31 @@ def test_get_random_quiz_with_difficulty(client):
 
     assert question_country["difficulty"] == "hard"
 
-def test_get_random_quiz_capital(client):
+def test_get_random_quiz_capital_contract(client):
     response = client.get("/quiz/random?mode=capital")
 
     assert response.status_code == 200
 
     data = response.json()
 
-    assert "capital" in data["question"].lower()
-    assert len(data["options"]) == 3
+    expected_capitals = {
+            1: "Jakarta", 
+            2: "Monaco", 
+            3: "Warsaw",
+        }
+
+    country_id = data["question_country_id"]
+    
+    assert "question_country_id" in data
+    assert data ["question_type"] == "capital"
+    assert data ["question"] == "Which country has the capital?"
+    assert data ["question_value"] == expected_capitals[country_id]
+        
+    
+    assert "options" in data
+    assert isinstance(data["options"], list)
+    assert len(data["options"]) > 0
+    assert country_id in [option["id"] for option in data ["options"]]
 
 def test_get_random_quiz_invalid_difficulty(client):
     response = client.get("/quiz/random?difficulty=easy")

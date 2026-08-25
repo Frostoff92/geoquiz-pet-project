@@ -58,17 +58,18 @@ def generate_random_quiz(
 
     if mode == QuizMode.flag:
         question = "Which country has this flag?"
-        payload = correct_country.flag
+        question_type = "flag"
+        question_value = correct_country.flag
     elif mode == QuizMode.capital:
-        question = (
-        f"Which country has the capital "f"{correct_country.capital}?"
-        )
-        payload = ""
+        question = "Which country has the capital?"
+        question_type = "capital"
+        question_value = correct_country.capital
 
     return {
         "question_country_id": correct_country.id,
         "question": question,
-        "flag": payload,
+        "question_type": question_type,
+        "question_value": question_value,
         "options": [
             {
                 "id": country.id,
