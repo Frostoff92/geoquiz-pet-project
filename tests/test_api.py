@@ -46,11 +46,12 @@ def test_get_random_quiz(client):
     data = responce.json()
 
     assert "question_country_id" in data
-    assert "question" in data
-    assert "flag" in data
+    assert data ["question_type"] == "flag"
+    assert data ["question"] == "Which country has this flag?"
+    assert data ["question_value"] in ["🇮🇩", "🇲🇨", "🇵🇱"]
     assert "options" in data
-    assert isinstance(data["options"], list)
-    assert len(data["options"]) > 0
+    assert isinstance(data["question_value"], str)
+    assert data["question_value"]
 
 def test_get_random_quiz_with_difficulty(client):
     response = client.get("/quiz/random?difficulty=hard")
