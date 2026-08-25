@@ -36,7 +36,7 @@
                   "hidden": false,
                   "query": {
                     "datasource": {
-                      "name": "bfmxabk8vbf28b"
+                      "name": "prometheus"
                     },
                     "group": "prometheus",
                     "kind": "DataQuery",
@@ -143,7 +143,7 @@
                   "hidden": false,
                   "query": {
                     "datasource": {
-                      "name": "bfmxabk8vbf28b"
+                      "name": "prometheus"
                     },
                     "group": "prometheus",
                     "kind": "DataQuery",
@@ -262,7 +262,7 @@
                   "hidden": false,
                   "query": {
                     "datasource": {
-                      "name": "bfmxabk8vbf28b"
+                      "name": "prometheus"
                     },
                     "group": "prometheus",
                     "kind": "DataQuery",
@@ -380,7 +380,7 @@
                   "hidden": false,
                   "query": {
                     "datasource": {
-                      "name": "bfmxabk8vbf28b"
+                      "name": "prometheus"
                     },
                     "group": "prometheus",
                     "kind": "DataQuery",
@@ -464,7 +464,7 @@
                   "hidden": false,
                   "query": {
                     "datasource": {
-                      "name": "bfmxabk8vbf28b"
+                      "name": "prometheus"
                     },
                     "group": "prometheus",
                     "kind": "DataQuery",
@@ -582,7 +582,7 @@
                   "hidden": false,
                   "query": {
                     "datasource": {
-                      "name": "bfmxabk8vbf28b"
+                      "name": "prometheus"
                     },
                     "group": "prometheus",
                     "kind": "DataQuery",
@@ -700,7 +700,7 @@
                   "hidden": false,
                   "query": {
                     "datasource": {
-                      "name": "bfmxabk8vbf28b"
+                      "name": "prometheus"
                     },
                     "group": "prometheus",
                     "kind": "DataQuery",
