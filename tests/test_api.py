@@ -111,6 +111,33 @@ def test_get_random_quiz_capital_contract(client):
     assert len(data["options"]) > 0
     assert country_id in [option["id"] for option in data ["options"]]
 
+
+def test_get_random_quiz_continent_contract(client):
+    responce = client.get("/quiz/random?mode=continent")
+
+    assert responce.status_code == 200
+
+    data = responce.json()
+
+    expected_continents = {
+            1: "Asia",
+            2: "Europe",
+            3: "Europe"
+        }
+
+    country_id = data["question_country_id"]
+
+    assert "question_country_id" in data
+    assert data ["question_type"] == "continent"
+    assert data ["question"] == "Which country is located in this continent?"
+    assert data ["question_value"] == expected_continents[country_id]
+
+    assert "options" in data
+    assert isinstance(data["options"], list)
+    assert len(data["options"]) > 0
+    assert country_id in [option["id"] for option in data ["options"]]
+
+
 def test_get_random_quiz_invalid_difficulty(client):
     response = client.get("/quiz/random?difficulty=easy")
 

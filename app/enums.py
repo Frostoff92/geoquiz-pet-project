@@ -7,3 +7,4 @@ class DifficultyLevel(str, Enum):
 class QuizMode(str, Enum):
     flag = "flag"
     capital = "capital"
+    continent = "continent"
