@@ -64,6 +64,10 @@ def generate_random_quiz(
         question = "Which country has the capital?"
         question_type = "capital"
         question_value = correct_country.capital
+    elif mode == QuizMode.continent:
+        question = "Which country is located in this continent?"
+        question_type = "continent"
+        question_value = correct_country.continent
 
     return {
         "question_country_id": correct_country.id,
