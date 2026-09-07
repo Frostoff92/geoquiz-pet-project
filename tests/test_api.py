@@ -187,3 +187,31 @@ def test_submit_answer_with_unknown_question_country_id(client):
     assert responce.status_code == 404
     assert responce.json()["detail"] == "Question country not found"
 
+def test_continent_quiz_answer_flow(client):
+    quiz_response = client.get(
+        "/quiz/random?mode=continent")
+
+    assert quiz_response.status_code == 200
+        
+    data = quiz_response.json()
+
+    assert data["question_type"] == "continent"
+
+    country_id = data["question_country_id"]
+
+    answer_response = client.post(
+        "/quiz/answer",
+        json={
+            "question_country_id": country_id,
+            "selected_country_id": country_id
+        }
+    )
+
+    assert answer_response.status_code == 200
+
+    answer_data = answer_response.json()
+
+    assert answer_data["correct"] is True
+
+
+
