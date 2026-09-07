@@ -1,3 +1,6 @@
+from app.models import CountryModel
+
+
 def test_health_check(client):
     responce = client.get("/health")
 
@@ -213,5 +216,39 @@ def test_continent_quiz_answer_flow(client):
 
     assert answer_data["correct"] is True
 
+def test_quiz_requires_at_least_two_countries(client, db_session):
+    db_session.query(CountryModel).filter(
+        CountryModel.name.in_(["Monaco", "Poland"])
+        ).delete(synchronize_session=False)
 
+    db_session.commit()
+
+    response = client.get("/quiz/random")
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Not enough countries to generate quiz"
+
+def test_random_quiz_returns_three_options(client):
+    response = client.get("/quiz/random")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert len(data["options"]) == 3
+
+def test_random_quiz_returns_two_options_when_only_two_countries_exist(client, db_session):
+    db_session.query(CountryModel).filter(
+        CountryModel.name == "Poland"
+    ).delete()
+
+    db_session.commit()
+
+    response = client.get("/quiz/random")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert len(data["options"]) == 2
 

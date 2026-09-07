@@ -46,6 +46,12 @@ def generate_random_quiz(
 
     options_pool = db.query(CountryModel).all()
 
+    if len(options_pool) < 2:
+        raise HTTPException(
+            status_code=400,
+            detail="Not enough countries to generate quiz"
+        )
+
     options = random.sample(
         options_pool,
         k=min(3, len(options_pool))
